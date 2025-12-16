@@ -74,23 +74,24 @@
     <!-- Loader Stop -->
 
     <!-- Content Start -->
-    <div class="card p-4" style="background-color: #83b89e;" hidden>
+    <div class="card p-4" style="background-color: #83b89e;" id="cardContent" hidden>
       <div class="text-center m-1">
-        <img src="./assets/images/logo-rsi-only.png" class="img-fluid" style="height: 80px;" alt="Hospital logo" hidden>
+        <img src="./assets/images/logo-rsi-only.png" class="img-fluid" id="lgimg" style="height: 80px;" alt="Hospital logo"
+          hidden>
       </div>
       <form action="#">
         <div class="mb-2">
-          <label for="uname" class="form-label m-0" hidden><strong>Username</strong></label>
-          <input type="text" class="form-control" id="uname" aria-describedby="uname" hidden>
+          <label for="lat" class="form-label m-0" id="lblLat" hidden><strong>Latitude</strong></label>
+          <input type="text" class="form-control" id="lat" aria-describedby="lat" hidden>
         </div>
         <div class="mb-2">
-          <label for="pw" class="form-label m-0" hidden><strong>Password</strong></label>
-          <input type="password" class="form-control" id="pw" aria-describedby="uname" hidden>
+          <label for="long" class="form-label m-0" id="lblLong" hidden><strong>Longitude</strong></label>
+          <input type="text" class="form-control" id="long" aria-describedby="long" hidden>
         </div>
-        <div class="mb-2 form-check" hidden>
+        <!-- <div class="mb-2 form-check" hidden>
           <input type="checkbox" class="form-check-input" id="showPw">
           <label class="form-check-label" for="showPw">Show password!</label>
-        </div>
+        </div> -->
       </form>
       </div>
     <!-- Content Stop -->
@@ -140,7 +141,7 @@
               errorMessege = "An unexpected error occurred while getting location";
               break;
           }
-          alert(`Gagal! ${errorMessege}`);
+          alert(`Sorry! ${errorMessege}`);
           resultLoc(null, null, null, errorMessege);
         },
         {
@@ -152,14 +153,33 @@
     } else {
       // browser does not support geolocation
       const messege = "Your browser doesn't support Geolocation";
-      console.error(messege);
+      // console.error(messege);
       resultLoc(null, null, null, messege);
     }
   }
 
   function resultLoc(lat, long, acc, err = null) {
     const elementInfo = document.getElementById('loader');
+    elementInfo.hidden = true;
     if (!infoElement) return;
+
+    if (error) {
+      // infoElement.innerHTML = `<p style="color: red;">${error}</p>`;
+      alert(`Sorry! ${error}`);
+    } else if (lintang !== null && bujur !== null) {
+      // elementInfo.hidden = true;
+      document.getElementById('cardContent').hidden = true;
+      document.getElementById('lgimg').hidden = true;
+      document.getElementById('lblLat').hidden = true;
+      document.getElementById('lat').hidden = true;
+      document.getElementById('lat').value = lintang;
+      document.getElementById('lblLong').hidden = true;
+      document.getElementById('long').hidden = true;
+      document.getElementById('long').value = bujur;
+    } else {
+      // infoElement.innerHTML = `<p>Menunggu permintaan lokasi...</p>`;
+      alert(`Sorry! Waiting`);
+    }
   }
 </script>
 </body>
